@@ -1,17 +1,15 @@
 ```
-# Environment
+# Environment and config files
 .env
 .env.local
 .env.*
 
-# Logs and temp files
+# Logs
 *.log
+
+# Temporary files
 *.tmp
 *.swp
-
-# Editors
-.vscode/
-.idea/
 
 # Dependencies
 node_modules/
@@ -35,6 +33,10 @@ target/
 *.a
 *.obj
 *.out
+
+# Editor/IDE files
+.vscode/
+.idea/
 
 # System files
 .DS_Store
