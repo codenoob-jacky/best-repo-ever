@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}首页 - Bilibili Clone{% endblock %}
+
+{% block content %}
+<!-- 轮播图区域 -->
+<div id="homeCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://via.placeholder.com/1200x400/FF9800/FFFFFF?text=热门视频推荐" class="d-block w-100" alt="Slide 1">
+        </div>
+        <div class="carousel-item">
+            <img src="https://via.placeholder.com/1200x400/2196F3/FFFFFF?text=最新投稿" class="d-block w-100" alt="Slide 2">
+        </div>
+        <div class="carousel-item">
+            <img src="https://via.placeholder.com/1200x400/4CAF50/FFFFFF?text=排行榜" class="d-block w-100" alt="Slide 3">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<!-- 推荐视频 -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h3><i class="fas fa-fire text-danger me-2"></i>热门推荐</h3>
+    </div>
+</div>
+
+<div class="row">
+    {% for i in '123456'|make_list %}
+    <div class="col-md-4 col-lg-2 mb-4">
+        <div class="card video-card h-100">
+            <img src="https://via.placeholder.com/300x200/CCCCCC/666666?text=视频缩略图" class="card-img-top" alt="Video Thumbnail">
+            <div class="card-body p-2">
+                <h6 class="card-title mb-1">视频标题 {{ forloop.counter }}</h6>
+                <div class="d-flex justify-content-between text-muted small">
+                    <span><i class="fas fa-eye"></i> 12.5万</span>
+                    <span><i class="far fa-clock"></i> 2天前</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- 分区推荐 -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h3><i class="fas fa-th-large me-2"></i>视频分区</h3>
+    </div>
+</div>
+
+<div class="row">
+    {% for category in '动画|音乐|游戏|科技|生活|鬼畜'|split:'|' %}
+    <div class="col-md-2 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-play-circle fa-2x text-primary mb-2"></i>
+                <h6 class="card-title">{{ category }}</h6>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- 最新视频 -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h3><i class="fas fa-history me-2"></i>最新视频</h3>
+    </div>
+</div>
+
+<div class="row">
+    {% for i in '12345678'|make_list %}
+    <div class="col-md-3 mb-4">
+        <div class="card video-card h-100">
+            <img src="https://via.placeholder.com/300x200/E91E63/FFFFFF?text=最新视频" class="card-img-top" alt="Video Thumbnail">
+            <div class="card-body p-2">
+                <h6 class="card-title mb-1">最新视频 {{ forloop.counter }}</h6>
+                <div class="d-flex justify-content-between text-muted small">
+                    <span><i class="fas fa-user"></i> UP主</span>
+                    <span><i class="fas fa-eye"></i> {{ forloop.counter }}.{{ forloop.counter }}万</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
