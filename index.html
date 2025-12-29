@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilibili Clone</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 头部导航栏 -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://static.hdslb.com/images/bilibili-logo.png" alt="Bilibili">
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#">动画</a></li>
+                    <li><a href="#">番剧</a></li>
+                    <li><a href="#">国创</a></li>
+                    <li><a href="#">音乐</a></li>
+                    <li><a href="#">舞蹈</a></li>
+                    <li><a href="#">游戏</a></li>
+                    <li><a href="#">科技</a></li>
+                    <li><a href="#">数码</a></li>
+                    <li><a href="#">生活</a></li>
+                    <li><a href="#">鬼畜</a></li>
+                    <li><a href="#">时尚</a></li>
+                    <li><a href="#">娱乐</a></li>
+                    <li><a href="#">影视</a></li>
+                    <li><a href="#">纪录片</a></li>
+                </ul>
+            </nav>
+            <div class="nav-search">
+                <input type="text" placeholder="搜索你感兴趣的视频...">
+                <button>搜索</button>
+            </div>
+            <div class="nav-user">
+                <button class="login-btn">登录</button>
+                <button class="register-btn">注册</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 轮播图区域 -->
+        <section class="banner-section">
+            <div class="banner">
+                <img src="https://via.placeholder.com/1200x400/FF6B9D/FFFFFF?text=Bilibili+Banner" alt="轮播图">
+            </div>
+        </section>
+
+        <!-- 推荐视频区域 -->
+        <section class="recommend-section">
+            <div class="section-header">
+                <h2>推荐视频</h2>
+            </div>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/4A90E2/FFFFFF?text=Video+1" alt="视频缩略图">
+                        <div class="video-duration">10:25</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>【动画】最新番剧推荐</h3>
+                        <p class="uploader">Up主名称</p>
+                        <div class="video-stats">
+                            <span class="views">12.5万播放</span>
+                            <span class="time">3小时前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/7ED321/FFFFFF?text=Video+2" alt="视频缩略图">
+                        <div class="video-duration">15:42</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>【游戏】最新游戏实况</h3>
+                        <p class="uploader">游戏达人</p>
+                        <div class="video-stats">
+                            <span class="views">8.3万播放</span>
+                            <span class="time">5小时前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/F5A623/FFFFFF?text=Video+3" alt="视频缩略图">
+                        <div class="video-duration">8:17</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>【音乐】热门音乐榜单</h3>
+                        <p class="uploader">音乐频道</p>
+                        <div class="video-stats">
+                            <span class="views">25.7万播放</span>
+                            <span class="time">1天前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/BD10E0/FFFFFF?text=Video+4" alt="视频缩略图">
+                        <div class="video-duration">22:30</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>【科技】最新科技评测</h3>
+                        <p class="uploader">科技君</p>
+                        <div class="video-stats">
+                            <span class="views">18.9万播放</span>
+                            <span class="time">2天前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/9013FE/FFFFFF?text=Video+5" alt="视频缩略图">
+                        <div class="video-duration">12:45</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>【生活】日常Vlog分享</h3>
+                        <p class="uploader">生活博主</p>
+                        <div class="video-stats">
+                            <span class="views">6.2万播放</span>
+                            <span class="time">3天前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/50E3C2/FFFFFF?text=Video+6" alt="视频缩略图">
+                        <div class="video-duration">18:20</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>【鬼畜】鬼畜视频精选</h3>
+                        <p class="uploader">鬼畜区UP主</p>
+                        <div class="video-stats">
+                            <span class="views">32.1万播放</span>
+                            <span class="time">4天前</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 分区内容 -->
+        <section class="section-anime">
+            <div class="section-header">
+                <h2>动画</h2>
+                <a href="#" class="more-link">更多 ></a>
+            </div>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/4A90E2/FFFFFF?text=Anime+1" alt="动画视频">
+                        <div class="video-duration">24:10</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>热门新番更新</h3>
+                        <p class="uploader">动漫资讯</p>
+                        <div class="video-stats">
+                            <span class="views">45.6万播放</span>
+                            <span class="time">更新于今天</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/7ED321/FFFFFF?text=Anime+2" alt="动画视频">
+                        <div class="video-duration">22:15</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>经典动漫回顾</h3>
+                        <p class="uploader">怀旧动漫</p>
+                        <div class="video-stats">
+                            <span class="views">28.7万播放</span>
+                            <span class="time">更新于昨天</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/F5A623/FFFFFF?text=Anime+3" alt="动画视频">
+                        <div class="video-duration">19:30</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>国产动画力作</h3>
+                        <p class="uploader">国创动画</p>
+                        <div class="video-stats">
+                            <span class="views">36.4万播放</span>
+                            <span class="time">更新于前天</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/BD10E0/FFFFFF?text=Anime+4" alt="动画视频">
+                        <div class="video-duration">25:40</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>动漫制作幕后</h3>
+                        <p class="uploader">制作公司</p>
+                        <div class="video-stats">
+                            <span class="views">15.2万播放</span>
+                            <span class="time">一周前</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-game">
+            <div class="section-header">
+                <h2>游戏</h2>
+                <a href="#" class="more-link">更多 ></a>
+            </div>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/9013FE/FFFFFF?text=Game+1" alt="游戏视频">
+                        <div class="video-duration">30:15</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>最新游戏试玩</h3>
+                        <p class="uploader">游戏实况主</p>
+                        <div class="video-stats">
+                            <span class="views">52.3万播放</span>
+                            <span class="time">更新于今天</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/50E3C2/FFFFFF?text=Game+2" alt="游戏视频">
+                        <div class="video-duration">45:20</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>游戏攻略详解</h3>
+                        <p class="uploader">攻略达人</p>
+                        <div class="video-stats">
+                            <span class="views">38.9万播放</span>
+                            <span class="time">更新于昨天</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/4A90E2/FFFFFF?text=Game+3" alt="游戏视频">
+                        <div class="video-duration">28:10</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>电竞比赛解说</h3>
+                        <p class="uploader">电竞解说</p>
+                        <div class="video-stats">
+                            <span class="views">67.5万播放</span>
+                            <span class="time">更新于前天</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/320x180/7ED321/FFFFFF?text=Game+4" alt="游戏视频">
+                        <div class="video-duration">15:30</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>独立游戏推荐</h3>
+                        <p class="uploader">独立游戏</p>
+                        <div class="video-stats">
+                            <span class="views">24.7万播放</span>
+                            <span class="time">一周前</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">关于我们</a>
+                <a href="#">联系我们</a>
+                <a href="#">友情链接</a>
+                <a href="#">帮助中心</a>
+                <a href="#">投稿指南</a>
+                <a href="#">侵权申诉</a>
+            </div>
+            <p class="copyright">© 2023 Bilibili Clone. 仅供学习使用.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
