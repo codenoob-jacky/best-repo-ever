@@ -1,54 +1,59 @@
 ```
 # Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
+*.pyc
+*.pyo
+*.pyd
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+env/
+venv/
+.venv/
+.ENV
+.ENV.*
+.venv/
+.venv.*
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage/
+.pytest_cache/
+.hypothesis/
 
 # Django
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
-# IDE
-.vscode/
-.idea/
-
-# Environment
-.env
-.env.local
-.env.*
-.venv/
-venv/
-env/
-
-# OS
+media/
+staticfiles/
 .DS_Store
 Thumbs.db
 
-# Coverage
-.coverage
-htmlcov/
-.coverage.*
-.coverage.xml
-*.cover
-coverage.xml
+# Migration files should be tracked, but ignore other Django artifacts
+*.pot
+*.mo
+.rst
+
+# General
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*~
+.DS_Store
+ehthumbs.db
+Icon?
+._*
+.Spotlight-V100
+.Trashes
 ```
