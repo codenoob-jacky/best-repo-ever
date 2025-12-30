@@ -71,7 +71,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="{% url 'video_list' %}" class="back-link">← 返回视频列表</a>
+        <a href="{% url 'videos:video_list' %}" class="back-link">← 返回视频列表</a>
         <h1>上传视频</h1>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
