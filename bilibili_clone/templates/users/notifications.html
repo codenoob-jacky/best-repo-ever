@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通知 - Bilibili克隆</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .notification-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        .notification-item.unread {
+            background-color: #f0f8ff;
+            border-left: 4px solid #007cba;
+        }
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .notification-content {
+            flex: 1;
+        }
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .notification-message {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .notification-time {
+            font-size: 0.8em;
+            color: #999;
+        }
+        .notification-actions {
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #007cba;
+            color: #007cba;
+        }
+        .btn-primary {
+            background: #007cba;
+            color: white;
+        }
+        .no-notifications {
+            text-align: center;
+            color: #999;
+            padding: 40px 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .back-link {
+            color: #007cba;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .notification-type {
+            font-size: 0.8em;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background-color: #e9ecef;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>通知</h1>
+            <a href="{% url 'video_list' %}" class="back-link">返回视频列表</a>
+        </div>
+        
+        {% if notifications %}
+        <div class="notifications-list">
+            {% for notification in notifications %}
+            <div class="notification-item {% if not notification.is_read %}unread{% endif %}">
+                <div class="notification-icon">
+                    {% if notification.notification_type == 'comment' %}
+                    💬
+                    {% elif notification.notification_type == 'like' %}
+                    👍
+                    {% elif notification.notification_type == 'follow' %}
+                    👥
+                    {% elif notification.notification_type == 'mention' %}
+                    @
+                    {% else %}
+                    📢
+                    {% endif %}
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">
+                        {{ notification.title }}
+                        <span class="notification-type">{{ notification.get_notification_type_display }}</span>
+                    </div>
+                    <div class="notification-message">{{ notification.message }}</div>
+                    <div class="notification-time">{{ notification.created_at|date:"Y-m-d H:i" }}</div>
+                </div>
+                <div class="notification-actions">
+                    {% if notification.target_url %}
+                    <a href="{{ notification.target_url }}" class="btn btn-primary">查看</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-notifications">
+            <p>暂无通知</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

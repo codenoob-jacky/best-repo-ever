@@ -9,25 +9,9 @@ env/
 venv/
 .venv/
 .ENV
-.ENV.*
-.venv/
-.venv.*
+.venv.bak/
 pip-log.txt
 pip-delete-this-directory.txt
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.log
-.pytest_cache/
-.mypy_cache/
-htmlcov/
-.coverage/
-.pytest_cache/
-.hypothesis/
 
 # Django
 *.log
@@ -37,23 +21,85 @@ db.sqlite3-journal
 media/
 staticfiles/
 .DS_Store
-Thumbs.db
 
-# Migration files should be tracked, but ignore other Django artifacts
-*.pot
-*.mo
-.rst
+# Web
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+.coverage
+htmlcov/
+.coverage.*
+.pytest_cache/
+.mypy_cache/
 
-# General
-.DS_Store
-Thumbs.db
-*.tmp
+# IDE
+.vscode/
+.idea/
 *.swp
+*.swo
 *~
+
+# OS
 .DS_Store
+Thumbs.db
 ehthumbs.db
 Icon?
-._*
 .Spotlight-V100
 .Trashes
+Desktop.ini
+
+# Environment
+.env
+.env.local
+.env.dev
+.env.prod
+.env.backup
+.env~
+*.env
+*.env.*
+
+# Logs
+*.log
+logs/
+
+# Coverage
+coverage/
+htmlcov/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing
+.pytest_cache/
+.mypy_cache/
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django specific
+*.log
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
 ```

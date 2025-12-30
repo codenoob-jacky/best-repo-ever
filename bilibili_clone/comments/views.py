@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from videos.models import Video
+from users.models import Notification
 from .models import Comment, CommentReaction
 
 
@@ -30,6 +31,28 @@ def add_comment(request, video_id):
                 content=content,
                 parent=parent
             )
+            
+            # 如果不是回复评论，则通知视频上传者
+            if not parent and video.uploader != request.user:
+                Notification.objects.create(
+                    recipient=video.uploader,
+                    sender=request.user,
+                    notification_type='comment',
+                    title=f'{request.user.username} 评论了你的视频',
+                    message=f'{request.user.username} 在你的视频 "{video.title}" 下发表了评论：{content[:50]}...',
+                    target_url=f'{video.get_absolute_url()}#comment-{comment.id}'
+                )
+            
+            # 如果是回复评论，通知被回复的用户（如果不是自己）
+            if parent and parent.author != request.user:
+                Notification.objects.create(
+                    recipient=parent.author,
+                    sender=request.user,
+                    notification_type='comment',
+                    title=f'{request.user.username} 回复了你的评论',
+                    message=f'{request.user.username} 在视频 "{video.title}" 下回复了你的评论：{content[:50]}...',
+                    target_url=f'{video.get_absolute_url()}#comment-{comment.id}'
+                )
             
             return JsonResponse({
                 'success': True,
@@ -61,6 +84,17 @@ def reply_comment(request, comment_id):
                 content=content,
                 parent=parent_comment
             )
+            
+            # 通知被回复的用户（如果不是自己）
+            if parent_comment.author != request.user:
+                Notification.objects.create(
+                    recipient=parent_comment.author,
+                    sender=request.user,
+                    notification_type='comment',
+                    title=f'{request.user.username} 回复了你的评论',
+                    message=f'{request.user.username} 在视频 "{parent_comment.video.title}" 下回复了你的评论：{content[:50]}...',
+                    target_url=f'{parent_comment.video.get_absolute_url()}#comment-{reply.id}'
+                )
             
             return JsonResponse({
                 'success': True,
@@ -105,6 +139,17 @@ def like_comment(request, comment_id):
                 user=request.user,
                 reaction_type='like'
             )
+            
+            # 通知评论作者（如果不是自己）
+            if comment.author != request.user:
+                Notification.objects.create(
+                    recipient=comment.author,
+                    sender=request.user,
+                    notification_type='like',
+                    title=f'{request.user.username} 点赞了你的评论',
+                    message=f'{request.user.username} 点赞了你在视频 "{comment.video.title}" 下的评论',
+                    target_url=f'{comment.video.get_absolute_url()}#comment-{comment.id}'
+                )
         
         # 返回更新后的统计信息
         return JsonResponse({

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频列表 - Bilibili克隆</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        .search-bar button {
+            padding: 10px 15px;
+            background: #007cba;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .filters {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .category-filter {
+            display: inline-block;
+            margin: 0 5px;
+        }
+        .category-filter a {
+            display: inline-block;
+            padding: 5px 10px;
+            background: #e0e0e0;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+        .category-filter a.active, .category-filter a:hover {
+            background: #007cba;
+            color: white;
+        }
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .video-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        .video-thumbnail {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .video-info {
+            padding: 15px;
+        }
+        .video-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .video-uploader {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .video-stats {
+            color: #999;
+            font-size: 0.8em;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .pagination a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 2px;
+            background: #e0e0e0;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+        }
+        .pagination a.active {
+            background: #007cba;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>视频列表</h1>
+        </div>
+        
+        <div class="search-bar">
+            <form method="GET" action="{% url 'video_list' %}">
+                <input type="text" name="q" placeholder="搜索视频..." value="{{ query }}">
+                <button type="submit">搜索</button>
+            </form>
+        </div>
+        
+        <div class="filters">
+            <div class="category-filter">
+                <a href="{% url 'video_list' %}" {% if not selected_category %}class="active"{% endif %}>全部</a>
+                {% for category in categories %}
+                <a href="?category={{ category.id }}" {% if selected_category == category.id %}class="active"{% endif %}>{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="videos-grid">
+            {% for video in videos %}
+            <div class="video-card">
+                <a href="{% url 'video_detail' video.id %}">
+                    {% if video.thumbnail %}
+                    <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" class="video-thumbnail">
+                    {% else %}
+                    <img src="https://placehold.co/300x150?text=无缩略图" alt="{{ video.title }}" class="video-thumbnail">
+                    {% endif %}
+                </a>
+                <div class="video-info">
+                    <div class="video-title">{{ video.title }}</div>
+                    <div class="video-uploader">上传者: {{ video.uploader.username }}</div>
+                    <div class="video-stats">{{ video.view_count }} 次观看 • {{ video.created_at|date:"Y-m-d" }}</div>
+                </div>
+            </div>
+            {% empty %}
+            <p>没有找到匹配的视频</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

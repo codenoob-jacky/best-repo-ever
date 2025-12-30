@@ -60,13 +60,20 @@
                 </form>
                 <ul class="navbar-nav ms-3">
                     {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:notifications' %}" id="notifications-link">
+                            <i class="fas fa-bell"></i>
+                            <span id="notification-count" class="badge bg-danger" style="display: none;"></span>
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user-circle"></i> {{ user.username }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">个人中心</a></li>
-                            <li><a class="dropdown-item" href="#">我的投稿</a></li>
+                            <li><a class="dropdown-item" href="{% url 'users:profile_view' user.username %}">个人中心</a></li>
+                            <li><a class="dropdown-item" href="{% url 'users:edit_profile' %}">编辑资料</a></li>
+                            <li><a class="dropdown-item" href="{% url 'videos:user_videos' user.username %}">我的投稿</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">退出</a></li>
                         </ul>
@@ -117,6 +124,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        // 获取未读通知数量
+        function updateNotificationCount() {
+            if (typeof django !== 'undefined' && django.user && django.user.is_authenticated) {
+                fetch('{% url "users:unread_notifications_count" %}')
+                    .then(response => response.json())
+                    .then(data => {
+                        const countElement = document.getElementById('notification-count');
+                        if (data.count > 0) {
+                            countElement.textContent = data.count;
+                            countElement.style.display = 'inline';
+                        } else {
+                            countElement.style.display = 'none';
+                        }
+                    })
+                    .catch(error => console.error('Error fetching notification count:', error));
+            }
+        }
+        
+        // 页面加载完成后更新通知数量
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNotificationCount();
+        });
+    </script>
     
     {% block extra_js %}
     {% endblock %}

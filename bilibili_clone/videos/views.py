@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.db.models import Q, Max
 from .models import Video, VideoCategory, VideoTag, VideoReaction, VideoView, Playlist, PlaylistItem
 from comments.models import Comment
+from users.models import Notification
 
 
 def video_list(request):
@@ -61,10 +62,18 @@ def video_detail(request, pk):
     # 获取视频的评论
     comments = Comment.objects.filter(video=video, parent=None, is_deleted=False).select_related('author')
     
-    # 获取相关视频
+    # 获取相关视频（基于分类的推荐）
     related_videos = Video.objects.filter(
         videocategoryrelation__category__in=video.videocategoryrelation_set.values('category')
-    ).exclude(pk=pk)[:6]
+    ).exclude(pk=pk).distinct()[:6]
+    
+    # 如果基于分类的推荐不够，添加热门视频
+    if related_videos.count() < 6:
+        additional_videos = Video.objects.exclude(
+            pk=pk, 
+            pk__in=[v.pk for v in related_videos]
+        ).order_by('-view_count')[:6 - related_videos.count()]
+        related_videos = list(related_videos) + list(additional_videos)
     
     context = {
         'video': video,
@@ -157,6 +166,17 @@ def video_like(request, pk):
                 user=request.user,
                 reaction_type='like'
             )
+            
+            # 通知视频上传者（如果不是自己）
+            if video.uploader != request.user:
+                Notification.objects.create(
+                    recipient=video.uploader,
+                    sender=request.user,
+                    notification_type='like',
+                    title=f'{request.user.username} 点赞了你的视频',
+                    message=f'{request.user.username} 点赞了你的视频 "{video.title}"',
+                    target_url=f'{video.get_absolute_url()}'
+                )
         
         # 返回更新后的统计信息
         return JsonResponse({

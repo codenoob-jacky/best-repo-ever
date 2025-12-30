@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from .models import UserProfile, UserFollow
+from .models import UserProfile, UserFollow, Notification
 
 
 def profile(request, user_id):
@@ -141,9 +141,26 @@ def toggle_follow(request, user_id):
             follow.delete()
             following = False
             message = 'Unfollowed successfully'
+            
+            # 删除关注通知
+            Notification.objects.filter(
+                recipient=user_to_follow,
+                sender=request.user,
+                notification_type='follow'
+            ).delete()
         else:  # 如果关系不存在，创建它（关注）
             following = True
             message = 'Followed successfully'
+            
+            # 创建关注通知
+            Notification.objects.create(
+                recipient=user_to_follow,
+                sender=request.user,
+                notification_type='follow',
+                title=f'{request.user.username} 关注了你',
+                message=f'{request.user.username} 开始关注你了！',
+                target_url=f'/users/profile/{request.user.id}/'
+            )
         
         # 更新用户资料中的关注者计数
         followed_profile = user_to_follow.userprofile
@@ -157,3 +174,41 @@ def toggle_follow(request, user_id):
         })
     
     return JsonResponse({'success': False, 'message': 'Invalid request'})
+
+
+@login_required
+def notifications(request):
+    """
+    用户通知列表页面
+    """
+    notifications = request.user.notifications.all()
+    
+    # 标记所有通知为已读
+    request.user.notifications.filter(is_read=False).update(is_read=True)
+    
+    context = {
+        'notifications': notifications,
+    }
+    return render(request, 'users/notifications.html', context)
+
+
+@login_required
+def mark_notification_read(request, notification_id):
+    """
+    标记单个通知为已读
+    """
+    try:
+        notification = request.user.notifications.get(id=notification_id, is_read=False)
+        notification.mark_as_read()
+        return JsonResponse({'success': True})
+    except Notification.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Notification not found'})
+
+
+@login_required
+def unread_notifications_count(request):
+    """
+    获取未读通知数量
+    """
+    count = request.user.notifications.filter(is_read=False).count()
+    return JsonResponse({'count': count})

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile_user.username }}的视频 - Bilibili克隆</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .profile-header {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .videos-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .video-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        .video-thumbnail {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .video-info {
+            padding: 15px;
+        }
+        .video-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .video-stats {
+            color: #999;
+            font-size: 0.8em;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007cba;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'video_list' %}" class="back-link">← 返回视频列表</a>
+        
+        <div class="profile-header">
+            <h1>{{ profile_user.username }}的视频</h1>
+            <p>共 {{ videos.count }} 个视频</p>
+        </div>
+        
+        <div class="videos-header">
+            <h2>上传的视频</h2>
+        </div>
+        
+        <div class="videos-grid">
+            {% for video in videos %}
+            <div class="video-card">
+                <a href="{% url 'video_detail' video.id %}">
+                    {% if video.thumbnail %}
+                    <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" class="video-thumbnail">
+                    {% else %}
+                    <img src="https://placehold.co/300x150?text=无缩略图" alt="{{ video.title }}" class="video-thumbnail">
+                    {% endif %}
+                </a>
+                <div class="video-info">
+                    <div class="video-title">{{ video.title }}</div>
+                    <div class="video-stats">{{ video.view_count }} 次观看 • {{ video.created_at|date:"Y-m-d" }}</div>
+                </div>
+            </div>
+            {% empty %}
+            <p>{{ profile_user.username }} 还没有上传任何视频</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
